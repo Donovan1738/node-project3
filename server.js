@@ -106,23 +106,23 @@ let instruments = [
     },
 ];
 
-app.get("/api/recipes", (req, res) => {
+app.get("/api/instruments", (req, res) => {
     res.send(instruments);
 });
 
-app.get("/api/recipes/:id", (req, res) => {
+app.get("/api/instruments/:id", (req, res) => {
     const id = parseInt(req.params.id);
   
     const instrument = instruments.find((r)=>r.id === id);
 
     if (!instrument) {
-        res.status(404).send("The recipe with the given id was not found");
+        res.status(404).send("The instrument with the given id was not found");
     }
 
     res.send(instrument);
 });
 
-app.post("/api/recipes", upload.single("img"), (req,res) => {
+app.post("/api/instruments", upload.single("img"), (req,res) => {
     const result = validateInstrument(req.body);
     if(result.error) {
         res.status(400).send(result.error.details[0].message);
@@ -149,7 +149,7 @@ app.post("/api/recipes", upload.single("img"), (req,res) => {
     res.send(instrument);
 });
 
-app.put("/api/recipes/:id", upload.single("img"), (req, res) => {
+app.put("/api/instruments/:id", upload.single("img"), (req, res) => {
     const id = parseInt(req.params.id);
   
     const instrument = instruments.find((r)=>r.id === id);
@@ -173,13 +173,13 @@ app.put("/api/recipes/:id", upload.single("img"), (req, res) => {
     res.send(instrument);
 });
 
-app.delete("/api/recipes/:id", (req, res) => {
+app.delete("/api/instruments/:id", (req, res) => {
     const id = parseInt(req.params.id);
   
     const instrument = instruments.find((r)=>r.id === id);
 
     if (!instrument) {
-        res.status(404).send("The recipe with the given id was not found");
+        res.status(404).send("The instrument with the given id was not found");
     }
 
     const index = instruments.indexOf(instrument);

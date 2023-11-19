@@ -1,6 +1,6 @@
 const getInstruments = async () => {
     try {
-        return (await fetch("api/recipes")).json();
+        return (await fetch("api/instruments")).json();
     } catch(error) {
         console.log(error);
     }
@@ -8,11 +8,11 @@ const getInstruments = async () => {
 
 const showInstruments = async () => {
     let instruments = await getInstruments();
-    let instrumentsDiv = document.getElementById("recipe-list");
+    let instrumentsDiv = document.getElementById("instrument-list");
     instrumentsDiv.innerHTML = "";
     instruments.forEach((instrument) => {
         const section = document.createElement("section");
-        section.classList.add("recipe");
+        section.classList.add("instrument");
         instrumentsDiv.append(section);
 
         const a = document.createElement("a");
@@ -38,7 +38,7 @@ const showInstruments = async () => {
 };
 
 const displayDetails = (instrument) => {
-    const instrumentDetails = document.getElementById("recipe-details");
+    const instrumentDetails = document.getElementById("instrument-details");
     instrumentDetails.innerHTML = "";
 
     const h3 = document.createElement("h3");
@@ -82,7 +82,7 @@ const displayDetails = (instrument) => {
 };
 
 const deleteInstrument = async (instrument) => {
-    let response = await fetch(`/api/recipes/${instrument.id}`, {
+    let response = await fetch(`/api/instruments/${instrument.id}`, {
         method: "DELETE", 
         headers: {
             "Content-Type": "application/json;charset=utf-8",
@@ -96,7 +96,7 @@ const deleteInstrument = async (instrument) => {
 
     let result = await response.json();
     showInstruments();
-    document.getElementById("recipe-details").innerHTML = "";
+    document.getElementById("instrument-details").innerHTML = "";
     resetForm();
 };
 
@@ -136,13 +136,13 @@ const addEditInstrument = async (e) => {
         formData.delete("_id");
         // console.log(...formData);
 
-        response = await fetch("/api/recipes", {
+        response = await fetch("/api/instruments", {
             method: "POST",
             body: formData,
         });
     } else {
         // existing instrument
-        response = await fetch(`/api/recipes/${form._id.value}`, {
+        response = await fetch(`/api/instruments/${form._id.value}`, {
             method: "PUT",
             body: formData,
         });
